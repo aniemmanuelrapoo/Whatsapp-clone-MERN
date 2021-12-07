@@ -4,20 +4,36 @@ import tw from 'twin.macro'
 import ChatIcon from '@mui/icons-material/Chat';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { SearchOutlined } from '@mui/icons-material';
 import { IconButton, Avatar } from '@mui/material';
+import './style.css'
+import SidebarChat from './SidebarChat';
 
 const SidebarContainer = styled.div`
   ${tw`flex flex-col`}
   flex:0.35;
 `
 const SidebarHeader = styled.div`
-  ${tw`flex`}
+  ${tw`flex justify-between p-5 border-r border-gray-300`}
 `
 const SidebarHeaderRight = styled.div`
-  ${tw``}
+  ${tw`flex items-center justify-between`}
+  min-width:10vw;
 `
-const SidebarHeaderLeft = styled.div`
-  ${tw``}
+const SidebarSearch = styled.div`
+  ${tw`flex items-center p-3 mb-2`}
+  background-color: #f6f6f6;
+  height: 39px;
+`
+const SidebarSearchContainer = styled.div`
+  ${tw`flex items-center bg-white w-full rounded-2xl h-9`}
+  input{
+    ${tw`border-none outline-none ml-3`}
+  }
+`
+const SidebarChatContainer = styled.div`
+  ${tw`flex-1 bg-white overflow-auto`}
+  
 `
 
 const Sidebar = () => {
@@ -25,7 +41,7 @@ const Sidebar = () => {
         <SidebarContainer>
             <SidebarHeader>
                 <Avatar src="https://avatars.githubusercontent.com/u/68423036?v=4" />
-                <SidebarHeaderRight>
+                <SidebarHeaderRight className="sideright">
                     <IconButton>
                         <DonutLargeIcon />
                     </IconButton>
@@ -36,11 +52,20 @@ const Sidebar = () => {
                         <MoreVertIcon />
                     </IconButton>
                 </SidebarHeaderRight>
-
-                <SidebarHeaderLeft>
-
-                </SidebarHeaderLeft>
             </SidebarHeader>
+
+            <SidebarSearch>
+              <SidebarSearchContainer className="search__container">
+                <SearchOutlined />
+                <input type="text" placeholder="Search or start new chat" />
+              </SidebarSearchContainer>
+            </SidebarSearch>
+
+            <SidebarChatContainer>
+              <SidebarChat />
+              <SidebarChat />
+              <SidebarChat />
+            </SidebarChatContainer>
         </SidebarContainer>
     )
 }
