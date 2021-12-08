@@ -6,3 +6,7 @@
     color: gray;
     padding: 1px;
 }
+.chat__footer > .MuiSvgIcon-root{
+    padding: 1px;
+    color: gray;
+}

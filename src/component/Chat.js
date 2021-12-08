@@ -5,6 +5,8 @@ import tw from 'twin.macro'
 import { SearchOutlined } from '@mui/icons-material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import MicIcon from '@mui/icons-material/Mic';
 
 const ChatContainer = styled.div`
   ${tw`flex flex-col`}
@@ -48,6 +50,18 @@ const ChatBodyUser = styled.span`
 const ChatBodyTime = styled.span`
   ${tw`ml-2.5`}
   font-size: xx-small;
+`
+const ChatFooter = styled.div`
+  ${tw`flex justify-between items-center h-16 border-t border-gray-200`}
+`
+const ChatFooterForm = styled.form`
+  ${tw`flex-1 flex`}
+  input{
+      ${tw` rounded-3xl p-2.5 border-none outline-none`}
+  }
+  button{
+      display: none;
+  }
 `
 
 const Chat = () => {
@@ -95,17 +109,16 @@ const Chat = () => {
                     </ChatBodyTime>
                 </ChatReciverMessage>
 
-                <ChatBodyMessage>
-                    <ChatBodyUser>
-                        Rapoo
-                    </ChatBodyUser>
-                    this is a message
-                    <ChatBodyTime>
-                        {new Date().toUTCString()}
-                    </ChatBodyTime>
-                </ChatBodyMessage>
                 
             </ChatBody>
+            <ChatFooter className="chat__footer">
+                <InsertEmoticonIcon />
+                <ChatFooterForm>
+                    <input type="text" placeholder="Type a message" />
+                    <button type="submit">Send a message</button>
+                </ChatFooterForm>
+                <MicIcon />
+            </ChatFooter>
         </ChatContainer>
     )
 }
