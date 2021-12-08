@@ -58,6 +58,7 @@ const ChatFooterForm = styled.form`
   ${tw`flex-1 flex`}
   input{
       ${tw`flex-1 rounded-3xl p-2.5 border-none outline-none`}
+      width:20px;
   }
   button{
       display: none;
