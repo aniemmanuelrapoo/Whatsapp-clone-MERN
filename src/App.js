@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import tw from 'twin.macro'
 import Sidebar from './component/Sidebar';
 import Chat from './component/Chat';
+import { useEffect } from 'react';
+import Pusher from 'pusher-js';
+import axios from 'axios';
 
 const AppContainer = styled.div`
    ${tw`grid place-items-center h-screen`}
@@ -18,6 +21,25 @@ const AppBody = styled.div`
 `
 
 function App() {
+
+  // useEffect(() => {
+  //   axios.get('/messages/sync')
+  //     .then(response => {
+  //       console.log(re)
+  //     })
+  // }, [])
+
+  useEffect(() => {
+    const pusher = new Pusher('1210b3fbb4810fdd4c7c', {
+      cluster: 'eu'
+    });
+
+    const channel = pusher.subscribe('messages');
+    channel.bind('inserted', (data) => {
+      alert(JSON.stringify(data));
+    });
+  }, [])
+
   return (
       <AppContainer>
         <AppBody>
