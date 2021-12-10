@@ -1,5 +1,5 @@
 import { Avatar, IconButton } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'twin.macro'
 import { SearchOutlined } from '@mui/icons-material';
@@ -7,6 +7,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import MicIcon from '@mui/icons-material/Mic';
+import axios from '../axios';
 
 const ChatContainer = styled.div`
   ${tw`flex flex-col`}
@@ -65,7 +66,22 @@ const ChatFooterForm = styled.form`
   }
 `
 
-const Chat = () => {
+const Chat = ({ messages }) => {
+  const[input, setInput] = useState("");
+
+  const sendMessage = async (e) => {
+    e.preventDefault()
+
+    await axios.post('/messages/new', {
+        message: input,
+        name: "DEMO APP",
+        timestamp:"Just Now!",
+        received: true,
+    });
+
+    setInput('');
+  };
+
     return (
         <ChatContainer>
             <ChatHeader>
@@ -90,33 +106,24 @@ const Chat = () => {
             </ChatHeader>
 
             <ChatBody>
-                <ChatBodyMessage>
-                    <ChatBodyUser>
-                        Rapoo
-                    </ChatBodyUser>
-                    this is a message
+              {
+                messages.map((message) => (
+                  <p className={`chat__body ${message.received && 'chat__receiver'}`}>
+                    <ChatBodyUser>{message.name}</ChatBodyUser>
+                    {message.message}
                     <ChatBodyTime>
-                        {new Date().toUTCString()}
+                        {message.timestamp}
                     </ChatBodyTime>
-                </ChatBodyMessage>
-
-                <ChatReciverMessage>
-                    <ChatBodyUser>
-                        Rapoo
-                    </ChatBodyUser>
-                    this is a message
-                    <ChatBodyTime>
-                        {new Date().toUTCString()}
-                    </ChatBodyTime>
-                </ChatReciverMessage>
-
+                </p>
+                ))
+              }
                 
             </ChatBody>
             <ChatFooter className="chat__footer">
                 <InsertEmoticonIcon />
                 <ChatFooterForm>
-                    <input type="text" placeholder="Type a message" />
-                    <button type="submit">Send a message</button>
+                    <input type="text" placeholder="Type a message" value={input} onChange={(e)  => setInput(e.target.value)} />
+                    <button onClick={sendMessage} type="submit">Send a message</button>
                 </ChatFooterForm>
                 <MicIcon />
             </ChatFooter>

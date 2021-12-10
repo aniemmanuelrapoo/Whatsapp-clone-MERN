@@ -19,13 +19,13 @@ const SidebarChatInfo = styled.div`
   
 `
 
-const SidebarChat = () => {
+const SidebarChat = ({ name, message }) => {
     return (
         <SidebarChatContainer>
-            <Avatar src="https://avatars.githubusercontent.com/u/68423036?v=4" />
+            <Avatar />
             <SidebarChatInfo>
-                <h2>Room name</h2>
-                <p>This is the last message</p>
+                <h2>{name}</h2>
+                <p>{message}</p>
             </SidebarChatInfo>
         </SidebarChatContainer>
     )

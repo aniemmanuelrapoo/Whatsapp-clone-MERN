@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import tw from 'twin.macro'
 import Sidebar from './component/Sidebar';
 import Chat from './component/Chat';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Pusher from 'pusher-js';
-import axios from 'axios';
+import axios from './axios';
 
 const AppContainer = styled.div`
    ${tw`grid place-items-center h-screen`}
@@ -21,13 +21,14 @@ const AppBody = styled.div`
 `
 
 function App() {
+  const [messages, setMessages] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get('/messages/sync')
-  //     .then(response => {
-  //       console.log(re)
-  //     })
-  // }, [])
+  useEffect(() => {
+    axios.get('/messages/sync')
+      .then(response => {
+        setMessages(response.data)
+      })
+  }, [])
 
   useEffect(() => {
     const pusher = new Pusher('1210b3fbb4810fdd4c7c', {
@@ -35,16 +36,23 @@ function App() {
     });
 
     const channel = pusher.subscribe('messages');
-    channel.bind('inserted', (data) => {
-      alert(JSON.stringify(data));
+    channel.bind('inserted', (newMessage) => {
+      setMessages([...messages, newMessage])
     });
-  }, [])
+
+    return () => {
+      channel.unbind_all()
+      channel.unsubscribe();
+    }
+  }, [messages])
+
+  console.log(messages)
 
   return (
       <AppContainer>
         <AppBody>
           <Sidebar />
-          <Chat />
+          <Chat messages={messages} />
         </AppBody>
       </AppContainer>
   );

@@ -62,9 +62,9 @@ const Sidebar = () => {
             </SidebarSearch>
 
             <SidebarChatContainer>
-              <SidebarChat />
-              <SidebarChat />
-              <SidebarChat />
+              <SidebarChat name='Kelvin' message="Yo, whats up bro" />
+              <SidebarChat name="Mark" message="How are you doing" />
+              <SidebarChat name="Rapoo" message="I know you are working" />
             </SidebarChatContainer>
         </SidebarContainer>
     )
